@@ -5,7 +5,7 @@ const productStore = useProductsStore();
 const allProducts = ref([]);
 
 productStore.getAllProducts().then(() => {
-allProducts.value = productStore.products;
+  allProducts.value = productStore.products;
 });
 
 const selectedCategory = ref("");
@@ -29,7 +29,13 @@ const selectedCategory = ref("");
         </div>
         <div class="flex gap-6 flex-wrap mx-auto">
           <template v-for="(item, index) in allProducts" :key="index">
-            <CardsCardProduct :product="item" class="w-[calc(100%/4-18px)]" />
+            <CardsCardProduct
+              v-if="
+                selectedCategory == '' || item.category === selectedCategory
+              "
+              :product="item"
+              class="w-[calc(100%/4-18px)]"
+            />
           </template>
         </div>
       </div>
